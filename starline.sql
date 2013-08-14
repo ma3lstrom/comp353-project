@@ -93,19 +93,13 @@ CREATE TABLE `appointment` (
   `Notes` text,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
-  `EmployeeListID` int(11) NOT NULL,
-  `PatientListID` int(11) DEFAULT NULL,
   `ServiceID` int(11) DEFAULT NULL,
-  `RoomID` int(11) DEFAULT NULL,
+  `RoomID` int(11) NOT NULL,
   `UnitID` int(10) unsigned NOT NULL,
   PRIMARY KEY (`AppointmentID`),
-  KEY `EmployeeListId_idx` (`EmployeeListID`),
-  KEY `PatientID_idx` (`PatientListID`),
   KEY `ServiceID_idx` (`ServiceID`),
   KEY `RoomID_idx` (`RoomID`),
   KEY `UnitID_idx` (`UnitID`),
-  CONSTRAINT `PatientList_ID` FOREIGN KEY (`PatientListID`) REFERENCES `patient_list` (`PatientListID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `EmployeeListId` FOREIGN KEY (`EmployeeListID`) REFERENCES `employee_list` (`EmployeeListID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `RoomID` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `ServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `service` (`ServiceID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `UnitID` FOREIGN KEY (`UnitID`) REFERENCES `unit` (`UnitID`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -246,29 +240,57 @@ INSERT INTO `employee` VALUES (8,'Dollar','Narula','123 Something','514 555 5555
 UNLOCK TABLES;
 
 --
--- Table structure for table `employee_list`
+-- Table structure for table `employee_appointment`
 --
 
-DROP TABLE IF EXISTS `employee_list`;
+DROP TABLE IF EXISTS `employee_appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `employee_list` (
-  `EmployeeListID` int(11) NOT NULL,
+CREATE TABLE `employee_appointment` (
   `EmployeeID` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`EmployeeListID`,`EmployeeID`),
-  KEY `EmployeeID_idx` (`EmployeeID`),
-  CONSTRAINT `EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `ScheduleID` int(11) NOT NULL,
+  PRIMARY KEY (`EmployeeID`,`ScheduleID`),
+  KEY `ea_EmployeeID_idx` (`EmployeeID`),
+  KEY `ea_AppointmentID_idx` (`ScheduleID`),
+  CONSTRAINT `ea_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ea_AppointmentID` FOREIGN KEY (`ScheduleID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `employee_list`
+-- Dumping data for table `employee_appointment`
 --
 
-LOCK TABLES `employee_list` WRITE;
-/*!40000 ALTER TABLE `employee_list` DISABLE KEYS */;
-INSERT INTO `employee_list` VALUES (26,1002),(39,1002),(12,1003),(30,1003),(24,1005),(6,1006),(32,1008),(21,1010),(34,1010),(37,1012),(34,1013),(3,1014),(31,1014),(10,1018),(35,1019),(1,1020),(16,1020),(12,1022),(9,1023),(25,1023),(32,1025),(38,1025),(3,1027),(26,1028),(27,1028),(22,1029),(24,1029),(13,1030),(16,1032),(18,1035),(36,1035),(1,1036),(15,1036),(32,1037),(33,1037),(16,1038),(29,1039),(17,1041),(37,1041),(38,1041),(9,1043),(22,1043),(34,1044),(38,1046),(31,1048),(21,1053),(25,1054),(13,1056),(27,1057),(10,1058),(5,1059),(35,1059),(21,1060),(21,1061),(30,1061),(10,1064),(22,1064),(5,1065),(7,1065),(21,1065),(3,1066),(2,1067),(24,1069),(26,1069),(13,1070),(37,1070),(32,1071),(36,1072),(13,1073),(38,1073),(26,1075),(9,1078),(4,1080),(26,1080),(12,1081),(15,1081),(27,1082),(37,1082),(4,1084),(30,1084),(18,1086),(24,1086),(27,1086),(13,1087),(35,1087),(30,1088),(36,1090),(20,1091),(14,1092),(18,1093),(3,1094),(28,1094),(2,1096),(28,1096),(13,1097),(15,1097),(13,1099),(11,1201),(11,1203),(10,1204),(19,1205),(35,1205),(31,1206),(11,1208),(24,1208),(31,1208),(39,1210),(22,1211),(2,1215),(29,1216),(11,1217),(40,1219),(34,1220),(9,1221),(22,1221),(15,1222),(25,1222),(30,1222),(1,1223),(3,1224),(26,1224),(22,1225),(3,1226),(4,1228),(39,1228),(7,1229),(11,1231),(31,1231),(3,1232),(29,1232),(27,1235),(7,1236),(8,1236),(12,1236),(24,1236),(13,1238),(37,1238),(37,1239),(19,1241),(3,1242),(12,1242),(9,1243),(33,1243),(1,1245),(5,1245),(6,1247),(31,1247),(19,1251),(18,1252),(24,1252),(5,1256),(24,1256),(21,1257),(37,1257),(6,1259),(18,1259),(24,1259),(14,1260),(5,1263),(17,1266),(27,1266),(12,1267),(28,1267),(34,1267),(36,1267),(19,1269),(7,1270),(31,1270),(37,1273),(9,1274),(10,1274),(25,1274),(21,1275),(23,1275),(33,1276),(36,1276),(2,1278),(32,1280),(28,1281),(39,1284),(25,1285),(10,1286),(33,1286),(38,1288),(1,1290),(33,1290),(7,1292),(3,1295),(4,1295),(18,1295),(39,1295),(40,1297),(33,1298),(27,1299);
-/*!40000 ALTER TABLE `employee_list` ENABLE KEYS */;
+LOCK TABLES `employee_appointment` WRITE;
+/*!40000 ALTER TABLE `employee_appointment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee_appointment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `employee_schedule`
+--
+
+DROP TABLE IF EXISTS `employee_schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `employee_schedule` (
+  `EmployeeID` int(10) unsigned NOT NULL,
+  `ScheduleID` int(11) NOT NULL,
+  PRIMARY KEY (`EmployeeID`,`ScheduleID`),
+  KEY `es_EmployeeID_idx` (`EmployeeID`),
+  KEY `es_ScheduleID_idx` (`ScheduleID`),
+  CONSTRAINT `es_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `es_ScheduleID` FOREIGN KEY (`ScheduleID`) REFERENCES `schedule` (`ShiftID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `employee_schedule`
+--
+
+LOCK TABLES `employee_schedule` WRITE;
+/*!40000 ALTER TABLE `employee_schedule` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employee_schedule` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -582,13 +604,7 @@ CREATE TABLE `schedule` (
   `ShiftID` int(11) NOT NULL AUTO_INCREMENT,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
-  `EmployeeListID` int(11) NOT NULL,
-  `PatientListID` int(11) DEFAULT NULL,
-  PRIMARY KEY (`ShiftID`),
-  KEY `EmployeeList_ID_idx` (`EmployeeListID`),
-  KEY `PatientListID_idx` (`PatientListID`),
-  CONSTRAINT `PatientListID` FOREIGN KEY (`PatientListID`) REFERENCES `patient_list` (`PatientListID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `EmployeeList_ID` FOREIGN KEY (`EmployeeListID`) REFERENCES `employee_list` (`EmployeeListID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`ShiftID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1048,4 +1064,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-08-14  0:22:19
+-- Dump completed on 2013-08-14 15:03:48

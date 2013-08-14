@@ -89,7 +89,7 @@ DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE IF NOT EXISTS `appointment` (
-  `AppointmentID` int(11) NOT NULL,
+  `AppointmentID` int(11) NOT NULL AUTO_INCREMENT,
   `Notes` text,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,

@@ -88,23 +88,20 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `appointment` (
-  `AppointmentID` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `appointment` (
+  `AppointmentID` int(11) NOT NULL AUTO_INCREMENT,
   `Notes` text,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
-  `ServiceID` int(11) DEFAULT NULL,
-  `RoomID` int(11) NOT NULL,
-  `UnitID` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`AppointmentID`),
-  KEY `ServiceID_idx` (`ServiceID`),
-  KEY `RoomID_idx` (`RoomID`),
-  KEY `UnitID_idx` (`UnitID`),
+  KEY `EmployeeID` (`EmployeeID`),
+  KEY `FK_PatientID` (`PatientID`),
+  CONSTRAINT `FK_PatientID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`HospitalCardID`),
+  CONSTRAINT `FK_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`),
   CONSTRAINT `RoomID` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `ServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `service` (`ServiceID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `UnitID` FOREIGN KEY (`UnitID`) REFERENCES `unit` (`UnitID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Dumping data for table `appointment`

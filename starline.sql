@@ -89,12 +89,12 @@ DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `appointment` (
-  `AppointmentID` int(11) NOT NULL,
+  `AppointmentID` int(11) NOT NULL AUTO_INCREMENT,
   `Notes` text,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
   `ServiceID` int(11) DEFAULT NULL,
-  `RoomID` int(11) NOT NULL,
+  `RoomID` int(11) DEFAULT NULL,
   `UnitID` int(10) unsigned NOT NULL,
   `PatientID` int(11) DEFAULT NULL,
   PRIMARY KEY (`AppointmentID`),

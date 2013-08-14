@@ -88,20 +88,26 @@ UNLOCK TABLES;
 DROP TABLE IF EXISTS `appointment`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS `appointment` (
-  `AppointmentID` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `appointment` (
+  `AppointmentID` int(11) NOT NULL,
   `Notes` text,
   `StartTime` datetime NOT NULL,
   `EndTime` datetime NOT NULL,
-  KEY `EmployeeID` (`EmployeeID`),
-  KEY `FK_PatientID` (`PatientID`),
-  CONSTRAINT `FK_PatientID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`HospitalCardID`),
-  CONSTRAINT `FK_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`),
+  `ServiceID` int(11) DEFAULT NULL,
+  `RoomID` int(11) NOT NULL,
+  `UnitID` int(10) unsigned NOT NULL,
+  `PatientID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`AppointmentID`),
+  KEY `ServiceID_idx` (`ServiceID`),
+  KEY `RoomID_idx` (`RoomID`),
+  KEY `UnitID_idx` (`UnitID`),
+  KEY `PatientID_idx` (`PatientID`),
+  CONSTRAINT `PatientID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`HospitalCardID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `RoomID` FOREIGN KEY (`RoomID`) REFERENCES `room` (`RoomID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `ServiceID` FOREIGN KEY (`ServiceID`) REFERENCES `service` (`ServiceID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `UnitID` FOREIGN KEY (`UnitID`) REFERENCES `unit` (`UnitID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `appointment`
@@ -537,31 +543,6 @@ CREATE TABLE `patient` (
 LOCK TABLES `patient` WRITE;
 /*!40000 ALTER TABLE `patient` DISABLE KEYS */;
 /*!40000 ALTER TABLE `patient` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `patient_list`
---
-
-DROP TABLE IF EXISTS `patient_list`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `patient_list` (
-  `PatientListID` int(11) NOT NULL,
-  `PatientID` int(11) NOT NULL,
-  PRIMARY KEY (`PatientListID`,`PatientID`),
-  KEY `Patient_ID_idx` (`PatientID`),
-  CONSTRAINT `Patient_ID` FOREIGN KEY (`PatientID`) REFERENCES `patient` (`HospitalCardID`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `patient_list`
---
-
-LOCK TABLES `patient_list` WRITE;
-/*!40000 ALTER TABLE `patient_list` DISABLE KEYS */;
-/*!40000 ALTER TABLE `patient_list` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1061,4 +1042,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-08-14 15:03:48
+-- Dump completed on 2013-08-14 15:11:03

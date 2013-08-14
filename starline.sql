@@ -904,7 +904,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'direct','dollar',8),(2,'admin','dollar',1006);
+INSERT INTO `user` VALUES (1,'direct','dollar',8),(2,'admin','dollar',1006), (3,'dr','seb',1087);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

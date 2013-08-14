@@ -251,12 +251,12 @@ DROP TABLE IF EXISTS `employee_appointment`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `employee_appointment` (
   `EmployeeID` int(10) unsigned NOT NULL,
-  `ScheduleID` int(11) NOT NULL,
-  PRIMARY KEY (`EmployeeID`,`ScheduleID`),
+  `AppointmentID` int(11) NOT NULL,
+  PRIMARY KEY (`EmployeeID`,`AppointmentID`),
   KEY `ea_EmployeeID_idx` (`EmployeeID`),
-  KEY `ea_AppointmentID_idx` (`ScheduleID`),
-  CONSTRAINT `ea_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `ea_AppointmentID` FOREIGN KEY (`ScheduleID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `ea_AppointmentID_idx` (`AppointmentID`),
+  CONSTRAINT `ea_AppointmentID` FOREIGN KEY (`AppointmentID`) REFERENCES `appointment` (`AppointmentID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `ea_EmployeeID` FOREIGN KEY (`EmployeeID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1042,4 +1042,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-08-14 15:11:03
+-- Dump completed on 2013-08-14 15:14:26

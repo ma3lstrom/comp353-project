@@ -528,14 +528,24 @@ CREATE TABLE `patient` (
   `LastName` varchar(45) NOT NULL,
   `MedicationListID` int(11) DEFAULT NULL,
   `DoctorNotes` text,
+<<<<<<< HEAD
   `DoctorID` int(10) unsigned DEFAULT NULL,
+=======
+  `DoctorID` int(11) NOT NULL,
+>>>>>>> 981dfe5d93e385d1cafc8071f44b666dd53f16f0
   PRIMARY KEY (`HospitalCardID`),
   UNIQUE KEY `MedicareNumber_UNIQUE` (`MedicareNumber`),
   UNIQUE KEY `HospitalCardID_UNIQUE` (`HospitalCardID`),
   KEY `MedicationListID_idx` (`MedicationListID`),
+<<<<<<< HEAD
   KEY `DoctorID_idx` (`DoctorID`),
   CONSTRAINT `DoctorID` FOREIGN KEY (`DoctorID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `MedicationListID` FOREIGN KEY (`MedicationListID`) REFERENCES `medication_list` (`MedicationListID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+=======
+  CONSTRAINT `MedicationListID` FOREIGN KEY (`MedicationListID`) REFERENCES `medication_list` (`MedicationListID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `DoctorID_idx` (`DoctorID`),
+  CONSTRAINT `DoctorID` FOREIGN KEY (`DoctorID`) REFERENCES `employee` (`EmployeeID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+>>>>>>> 981dfe5d93e385d1cafc8071f44b666dd53f16f0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -901,7 +911,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'direct','dollar',8),(2,'admin','dollar',1006);
+INSERT INTO `user` VALUES (1,'direct','dollar',8),(2,'admin','dollar',1006), (3,'dr','seb',1087);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

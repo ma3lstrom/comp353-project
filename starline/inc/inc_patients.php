@@ -31,11 +31,12 @@ function getPatientTable($id) {
         $table .= '    </tr>';
 
         
-        }
+        } 
         $table .= '   </table> </div>';  
         
         return $table;        
     }
+;
 
 ?>
 
